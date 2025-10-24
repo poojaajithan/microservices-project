@@ -14,6 +14,7 @@
         <module>hotel-service</module>
         <module>user-service</module>
         <module>rating-service</module>
+		<module>service-registry</module>
         <module>common-lib</module>
     </modules>
 </project>
