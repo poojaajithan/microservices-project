@@ -1,6 +1,5 @@
 package com.microserviceproject.user.service.userservice.entities;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
