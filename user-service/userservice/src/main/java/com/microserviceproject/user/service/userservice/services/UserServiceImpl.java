@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
         //fetch rating of user from rating service
         Rating[] ratingsArray = restTemplate.getForObject(
-                "http://localhost:8083/ratings/user/" + userId,
+                "http://RATINGSERVICE/ratings/user/" + userId,
                 Rating[].class
         );
         
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
                     try {
                         //fetch hotel info for each rating
                         Hotel hotel = restTemplate.getForObject(
-                                "http://localhost:8082/hotels/" + rating.getHotelId(),
+                                "http://HOTELSERVICE/hotels/" + rating.getHotelId(),
                                 Hotel.class
                         );
                         log.info("Hotel info received for hotelId {}: {}", rating.getHotelId(), hotel);
