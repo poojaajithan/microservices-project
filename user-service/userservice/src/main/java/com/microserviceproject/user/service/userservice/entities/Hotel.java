@@ -1,4 +1,4 @@
-package com.microserviceproject.ratingservice.entities;
+package com.microserviceproject.user.service.userservice.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "ratings")
+@Table(name = "hotels")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rating {
+public class Hotel {
     @Id
-    private String ratingId;
-    private String userId;
-    private String hotelId;
-    private int rating;
-    private String review;
+    private String id;
+    private String name;
+    private String location;
+    private String about;
+    private Double price;
 }
