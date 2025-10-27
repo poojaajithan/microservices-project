@@ -1,6 +1,7 @@
 package com.microserviceproject.user.service.userservice.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Rating {
     private String ratingId;
     private String userId;
