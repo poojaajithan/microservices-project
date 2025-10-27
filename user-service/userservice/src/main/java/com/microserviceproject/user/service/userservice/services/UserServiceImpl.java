@@ -14,6 +14,7 @@ import com.microserviceproject.user.service.userservice.entities.Hotel;
 import com.microserviceproject.user.service.userservice.entities.Rating;
 import com.microserviceproject.user.service.userservice.entities.User;
 import com.microserviceproject.user.service.userservice.exceptions.ResourceNotFoundException;
+import com.microserviceproject.user.service.userservice.external.services.HotelService;
 import com.microserviceproject.user.service.userservice.repositories.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private HotelService hotelService;
 
     @Override
     public void deleteUser(String userId) {
@@ -55,11 +59,14 @@ public class UserServiceImpl implements UserService {
             ratingsList = Arrays.stream(ratingsArray)
                 .map(rating -> {
                     try {
-                        //fetch hotel info for each rating
-                        Hotel hotel = restTemplate.getForObject(
+                        //fetch hotel info for each rating using restTemplate
+                        /*Hotel hotel = restTemplate.getForObject(
                                 "http://HOTELSERVICE/hotels/" + rating.getHotelId(),
                                 Hotel.class
-                        );
+                        );*/
+                        //fetch hotel info for each rating using Feign client
+                        Hotel hotel = hotelService.getHotel(rating.getHotelId());
+                        
                         log.info("Hotel info received for hotelId {}: {}", rating.getHotelId(), hotel);
                         rating.setHotel(hotel);
                     } catch (Exception e) {
