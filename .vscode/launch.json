@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ApigatewayApplication",
+            "request": "launch",
+            "mainClass": "com.microserviceproject.apigateway.ApigatewayApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -22,21 +29,30 @@
             "name": "RatingserviceApplication",
             "request": "launch",
             "mainClass": "com.microserviceproject.ratingservice.RatingserviceApplication",
-            "projectName": "ratingservice"
+            "projectName": "ratingservice",
+            "noDebug": false,
+            "__progressId": "c32b9e54-f674-4b6f-8fe2-7272d0ac0f4e",
+            "__origin": "internal"
         },
         {
             "type": "java",
             "name": "ServiceregistryApplication",
             "request": "launch",
             "mainClass": "com.microserviceproject.serviceregistry.ServiceregistryApplication",
-            "projectName": "serviceregistry"
+            "projectName": "serviceregistry",
+            "noDebug": false,
+            "__progressId": "2f0241b9-269c-4a3a-b76f-87a4a0b0c6e4",
+            "__origin": "internal"
         },
         {
             "type": "java",
             "name": "UserserviceApplication",
             "request": "launch",
             "mainClass": "com.microserviceproject.user.service.userservice.UserserviceApplication",
-            "projectName": "userservice"
+            "projectName": "userservice",
+            "noDebug": false,
+            "__progressId": "55a7d10e-cb90-4330-9ab0-7b87f6466694",
+            "__origin": "internal"
         }
     ]
 }
