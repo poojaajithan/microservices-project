@@ -2,7 +2,6 @@ package com.microserviceproject.user.service.userservice.controllers;
 
 import java.util.List;
 
-import org.hibernate.engine.jdbc.env.internal.LobCreationLogging_.logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +53,13 @@ public class UserController {
     //maintain same return type as original method
     public ResponseEntity<User> getUserByIdFallback(String userId, Exception ex) {
         log.error("Fallback executed for getUserById with userId: {} due to exception: {}", userId, ex.getMessage());
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
+        User user = User.builder()
+            .userId("DummyID")
+            .name("Dummy User")
+            .email("dummyuser@example.com")
+            .about("This user is a fallback user as the User Service is currently unavailable.")
+            .build();
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(user);
     }
 }
     
