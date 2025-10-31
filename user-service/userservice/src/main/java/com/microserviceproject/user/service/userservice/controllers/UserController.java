@@ -2,6 +2,7 @@ package com.microserviceproject.user.service.userservice.controllers;
 
 import java.util.List;
 
+import org.hibernate.engine.jdbc.env.internal.LobCreationLogging_.logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.microserviceproject.user.service.userservice.entities.User;
 import com.microserviceproject.user.service.userservice.services.UserService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 @RequestMapping("/users")
 public class UserController {
 
@@ -33,6 +38,7 @@ public class UserController {
 
     //single user get
     @GetMapping("/{userId}")
+    @CircuitBreaker(name = "userServiceCircuitBreaker", fallbackMethod = "getUserByIdFallback")
     public ResponseEntity<User> getUserById(@PathVariable String userId) {
         User user = userService.getUserById(userId);
         return ResponseEntity.ok(user);
@@ -44,5 +50,11 @@ public class UserController {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }  
+
+    //maintain same return type as original method
+    public ResponseEntity<User> getUserByIdFallback(String userId, Exception ex) {
+        log.error("Fallback executed for getUserById with userId: {} due to exception: {}", userId, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
+    }
 }
     
