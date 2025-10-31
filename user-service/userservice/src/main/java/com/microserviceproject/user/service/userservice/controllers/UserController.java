@@ -15,6 +15,7 @@ import com.microserviceproject.user.service.userservice.entities.User;
 import com.microserviceproject.user.service.userservice.services.UserService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +40,8 @@ public class UserController {
     //single user get
     @GetMapping("/{userId}")
     //@CircuitBreaker(name = "userServiceCircuitBreaker", fallbackMethod = "getUserByIdFallback")
-    @Retry(name = "userServiceRetry", fallbackMethod = "getUserByIdFallback")   
+    //@Retry(name = "userServiceRetry", fallbackMethod = "getUserByIdFallback")   
+    @RateLimiter(name = "userServiceRateLimiter", fallbackMethod = "getUserByIdFallback")
     public ResponseEntity<User> getUserById(@PathVariable String userId) {
         User user = userService.getUserById(userId);
         return ResponseEntity.ok(user);
