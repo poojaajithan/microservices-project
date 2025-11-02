@@ -12,20 +12,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        return http
+
+        http
             .csrf(ServerHttpSecurity.CsrfSpec::disable)
             .authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/actuator/**", "/", "/login/**", "/oauth2/**").permitAll()
+                .pathMatchers(
+                    "/actuator/**",
+                    "/",
+                    "/login/**",
+                    "/oauth2/**",
+                    "/eureka/**"
+                ).permitAll()
                 .anyExchange().authenticated()
             )
-            .oauth2Login(oauth2Login -> {
-                // Add default success handler
-                oauth2Login.authenticationSuccessHandler((webFilterExchange, authentication) -> {
-                    webFilterExchange.getExchange().getResponse().setStatusCode(org.springframework.http.HttpStatus.OK);
-                    return webFilterExchange.getChain().filter(webFilterExchange.getExchange());
-                });
-            })
-            .oauth2Client(oauth2Client -> {})
-            .build();
+            .oauth2Login() // separate configuration for login
+            .and()         // return to the ServerHttpSecurity builder
+            .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt); // configure JWT
+
+        return http.build();
     }
 }

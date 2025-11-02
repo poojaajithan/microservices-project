@@ -5,20 +5,25 @@ spring:
     oauth2:
       client:
         registration:
-          okta:
-            provider: okta
+          auth0:
+            provider: auth0
             client-id: LF34PketzgYXD2kOu1HvOOLBHwu9d2nY
             client-secret: _c2e81THku7KGG90WmHMNrYZklJkdnQlPah6NASLAgpwW0wbYX2cweL4EWL8GDNG
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8084/login/oauth2/code/okta
+            redirect-uri: "{baseUrl}/login/oauth2/code/auth0"
             scope:
               - openid
               - profile
               - email
               - offline_access
+
         provider:
-          okta:
-            issuer-uri: https://dev-x1izhrf6b8cbnfh5.okta.com/oauth2/default
+          auth0:
+            issuer-uri: https://dev-x1izhrf6b8cbnfh5.us.auth0.com/
+
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-x1izhrf6b8cbnfh5.us.auth0.com/
   cloud:
     gateway:
       routes:
