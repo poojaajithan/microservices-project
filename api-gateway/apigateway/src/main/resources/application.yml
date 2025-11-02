@@ -32,6 +32,11 @@ spring:
           predicates:
             - Path=/users/**
           filters:
+            - RemoveRequestHeader=Cookie
+            - name: RewritePath
+              args:
+                regexp: "/user-service/(?<segment>.*)"
+                replacement: "/${segment}"
             - TokenRelay
 
         - id: HOTELSERVICE
