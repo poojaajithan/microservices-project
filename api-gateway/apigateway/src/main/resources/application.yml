@@ -8,6 +8,8 @@ spring:
           uri: lb://USERSERVICE
           predicates:
             - Path=/users/**
+          filters:
+            - TokenRelay  # forwards token to downstream (requires oauth2 client support)
 
         - id: HOTELSERVICE
           uri: lb://HOTELSERVICE
@@ -18,6 +20,13 @@ spring:
           uri: lb://RATINGSERVICE
           predicates:
             - Path=/ratings/**
+okta:
+  oauth2:
+    issuer: https://dev-x1izhrf6b8cbnfh5.okta.com/oauth2/default
+    audience: api://default/
+    client-id: LF34PketzgYXD2kOu1HvOOLBHwu9d2nY
+    client-secret: _c2e81THku7KGG90WmHMNrYZklJkdnQlPah6NASLAgpwW0wbYX2cweL4EWL8GDNG
+    scope: openid, profile, email, offline_access
 
 server:
   port: 8084
