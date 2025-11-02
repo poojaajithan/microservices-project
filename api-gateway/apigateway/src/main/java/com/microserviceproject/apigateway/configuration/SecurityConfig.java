@@ -11,16 +11,21 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        http
-            .authorizeExchange()
-            .anyExchange().authenticated()
-            .and()
-            .oauth2Login()
-            .and()
-            .oauth2ResourceServer()
-            .jwt();
-
-        return http.build();
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        return http
+            .csrf(ServerHttpSecurity.CsrfSpec::disable)
+            .authorizeExchange(exchanges -> exchanges
+                .pathMatchers("/actuator/**", "/", "/login/**", "/oauth2/**").permitAll()
+                .anyExchange().authenticated()
+            )
+            .oauth2Login(oauth2Login -> {
+                // Add default success handler
+                oauth2Login.authenticationSuccessHandler((webFilterExchange, authentication) -> {
+                    webFilterExchange.getExchange().getResponse().setStatusCode(org.springframework.http.HttpStatus.OK);
+                    return webFilterExchange.getChain().filter(webFilterExchange.getExchange());
+                });
+            })
+            .oauth2Client(oauth2Client -> {})
+            .build();
     }
 }

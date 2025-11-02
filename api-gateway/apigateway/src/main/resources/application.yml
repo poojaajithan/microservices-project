@@ -1,6 +1,24 @@
 spring:
   application:
     name: API-GATEWAY
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            provider: okta
+            client-id: LF34PketzgYXD2kOu1HvOOLBHwu9d2nY
+            client-secret: _c2e81THku7KGG90WmHMNrYZklJkdnQlPah6NASLAgpwW0wbYX2cweL4EWL8GDNG
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8084/login/oauth2/code/okta
+            scope:
+              - openid
+              - profile
+              - email
+              - offline_access
+        provider:
+          okta:
+            issuer-uri: https://dev-x1izhrf6b8cbnfh5.okta.com/oauth2/default
   cloud:
     gateway:
       routes:
@@ -9,7 +27,7 @@ spring:
           predicates:
             - Path=/users/**
           filters:
-            - TokenRelay  # forwards token to downstream (requires oauth2 client support)
+            - TokenRelay
 
         - id: HOTELSERVICE
           uri: lb://HOTELSERVICE
@@ -20,13 +38,6 @@ spring:
           uri: lb://RATINGSERVICE
           predicates:
             - Path=/ratings/**
-okta:
-  oauth2:
-    issuer: https://dev-x1izhrf6b8cbnfh5.okta.com/oauth2/default
-    audience: api://default/
-    client-id: LF34PketzgYXD2kOu1HvOOLBHwu9d2nY
-    client-secret: _c2e81THku7KGG90WmHMNrYZklJkdnQlPah6NASLAgpwW0wbYX2cweL4EWL8GDNG
-    scope: openid, profile, email, offline_access
 
 server:
   port: 8084
