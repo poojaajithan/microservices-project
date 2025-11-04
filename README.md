@@ -38,6 +38,38 @@ This project demonstrates a distributed microservices setup built with:
 
 This ensures secure, authenticated communication across all microservices.
 
+# ⚡ Resilience4J Circuit Breaker & Retry in Microservices
+
+	This module demonstrates how **Resilience4J** is integrated into the microservices project to improve **fault tolerance**, **stability**, and **resilience** when services communicate with each other — for example, when **User Service** calls **Rating Service**.
+
+---
+
+## 🧩 Why Resilience4J?
+
+	In a distributed microservices architecture, one service might fail or become slow, causing cascading failures across the system.
+	
+	Resilience4J helps prevent that using:
+	
+	- 🛡️ **Circuit Breaker** – detects failures and temporarily blocks calls to a failing service.  
+	- 🔁 **Retry** – automatically retries failed requests before giving up.  
+	- 🧰 **Fallback** – defines a safe, default response when all retries fail.
+
+---
+
+## ⚙️ Dependencies
+
+	Add the following dependencies to your microservice (e.g., `user-service/pom.xml`):
+	
+	<dependency>
+	    <groupId>io.github.resilience4j</groupId>
+	    <artifactId>resilience4j-spring-boot3</artifactId>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-aop</artifactId>
+	</dependency>
+
 ---
 
 ## 🚀 Getting Started
@@ -141,17 +173,18 @@ This ensures secure, authenticated communication across all microservices.
 	•	Spring Security
 	•	Spring Cloud Gateway
 	•	Eureka Discovery
+	•	Circuit Breaker and Re-try mechanism
 	•	Feign / RestTemplate
 	•	MySQL + JPA
 	•	Lombok
 	•	Maven
 
 ### 🧪 Future Enhancements
-	•	Add Order and Payment services
-	•	Integrate Resilience4J for fault tolerance
-	•	Implement Centralized Config Server
-	•	Add Zipkin / OpenTelemetry tracing
-	•	Dockerize with docker-compose
+	•   Add distributed tracing with Zipkin or Jaeger
+	•	Integrate Spring Cloud Sleuth for request correlation
+	•	Add Grafana + Prometheus for metrics and observability
+	•	Deploy on Kubernetes for scalability
+	•	CI/CD pipeline with GitHub Actions
 
 ### 🧑‍💻 Contributing
     1.	Fork this repo
