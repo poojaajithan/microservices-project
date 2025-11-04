@@ -40,13 +40,16 @@ This ensures secure, authenticated communication across all microservices.
 
 # ⚡ Resilience4J Circuit Breaker & Retry in Microservices
 
-	This module demonstrates how **Resilience4J** is integrated into the microservices project to improve **fault tolerance**, **stability**, and **resilience** when services communicate with each other — for example, when **User Service** calls **Rating Service**.
+	This module demonstrates how **Resilience4J** is integrated into the microservices project to improve 
+	**fault tolerance**, **stability**, and **resilience** when services communicate with each other 
+	— for example, when **User Service** calls **Rating Service**.
 
 ---
 
 ## 🧩 Why Resilience4J?
 
-	In a distributed microservices architecture, one service might fail or become slow, causing cascading failures across the system.
+	In a distributed microservices architecture, one service might fail or become slow, 
+	causing cascading failures across the system.
 	
 	Resilience4J helps prevent that using:
 	
